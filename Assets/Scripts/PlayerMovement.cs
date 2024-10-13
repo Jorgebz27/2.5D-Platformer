@@ -23,6 +23,11 @@ public class PlayerMovement : MonoBehaviour
     public float jumpHoldForce = 4f;
     public float coyoteTime = 0.15f;
     public float jumpBufferTime = 0.1f;
+    private bool _isJumping = false;
+    private bool _canDoubleJump = true;
+    private float _jumpTimeCounter;
+    private float _coyoteTimeCounter;
+    private float _jumpBufferCounter;
     
     //Dash
     public float dashSpeed = 25f;
@@ -34,20 +39,17 @@ public class PlayerMovement : MonoBehaviour
     //Collision
     public LayerMask groundLayer;
     public Transform groundCheck;
-    public Transform wallCheck;
+    public Transform ceilingCheck;
     public float checkRad = 0.2f;
     private bool _isGrounded = false;
-    private bool _isJumping = false;
-    private bool _canDoubleJump = true;
-    private float _jumpTimeCounter;
-    private float _coyoteTimeCounter;
-    private float _jumpBufferCounter;
+    private bool _isTouchingCeiling = false;
     
 
     private void Update()
     {
         hInput = Input.GetAxisRaw("Horizontal");
         _isGrounded = Physics2D.OverlapCircle(groundCheck.position, checkRad, groundLayer);
+        _isTouchingCeiling = Physics2D.OverlapCircle(ceilingCheck.position, checkRad, groundLayer);
         
         Movement();
         Jump();
@@ -60,9 +62,12 @@ public class PlayerMovement : MonoBehaviour
         var acceleration = _isGrounded ? acc : airAcc;
         
         velocity.x  = Mathf.Lerp(velocity.x, speed, Time.deltaTime * acceleration);
-        
-        verticalVelocity += gravity * Time.deltaTime;
-        verticalVelocity = Mathf.Clamp(verticalVelocity, maxFallSpeed, Mathf.Infinity);
+
+        if (!_isDashing)
+        {
+            verticalVelocity += gravity * Time.deltaTime;
+            verticalVelocity = Mathf.Clamp(verticalVelocity, maxFallSpeed, Mathf.Infinity);
+        }
         
         if (_isGrounded && verticalVelocity < 0)
         {
@@ -87,13 +92,13 @@ public class PlayerMovement : MonoBehaviour
         else
             _coyoteTimeCounter -= Time.deltaTime;
 
-        // Buffer de salto: Permitir entrada de salto antes de aterrizar
+        // Buffer de salto
         if (Input.GetButtonDown("Jump"))
             _jumpBufferCounter = jumpBufferTime;
         else
             _jumpBufferCounter -= Time.deltaTime;
 
-        // Realizar el salto
+        // Salto
         if ((_jumpBufferCounter > 0 && _coyoteTimeCounter > 0) && !_isJumping)
         {
             _isJumping = true;
@@ -103,18 +108,18 @@ public class PlayerMovement : MonoBehaviour
         }
         
         // Saltar más alto si se mantiene el botón
-        if (Input.GetButton("Jump") && _isJumping && _jumpTimeCounter > 0)
+        if (Input.GetButton("Jump") && _isJumping && _jumpTimeCounter > 0 && !_isTouchingCeiling)
         {
             verticalVelocity += jumpHoldForce * Time.deltaTime;
             _jumpTimeCounter -= Time.deltaTime;
         }
 
-        // Terminar el salto si se suelta el botón
-        if (Input.GetButtonUp("Jump"))
+        // Terminar el salto
+        if (Input.GetButtonUp("Jump") || _isTouchingCeiling)
         {
             _isJumping = false;
             if (verticalVelocity > 0)
-                verticalVelocity *= 0.5f; // Reducir la velocidad de ascenso
+                verticalVelocity *= 0.5f;
         }
         
         // Doble salto
@@ -142,10 +147,11 @@ public class PlayerMovement : MonoBehaviour
     private IEnumerator DashCo()
     {
         var originalGravity = gravity;
-        gravity = 0; // Desactivar gravedad durante el dash
+        gravity = 0; 
         _isDashing = true;
         float dashDirection = isFacingR ? 1 : -1;
         velocity.x = dashDirection * dashSpeed;
+        _canDash = false;
 
         yield return new WaitForSeconds(dashTime);
 
@@ -164,10 +170,12 @@ public class PlayerMovement : MonoBehaviour
         scale.x *= -1;
         transform.localScale = scale;
     }
-    
+
     private void OnDrawGizmosSelected()
     {
         Gizmos.color = Color.red;
         Gizmos.DrawWireSphere(groundCheck.position, checkRad);
+        Gizmos.color = Color.green;
+        Gizmos.DrawWireSphere(ceilingCheck.position, checkRad);
     }
 }
