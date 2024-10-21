@@ -31,7 +31,7 @@ public class Health : MonoBehaviour
 
         if (currentHealth > 0)
         {
-            //cuando se tenga la animacion de tomar daño prender esto
+            //cuando se tenga la animacion de tomar daï¿½o prender esto
 
             //anim.SetTrigger("hurt");
             StartCoroutine(Invunerability());
@@ -47,6 +47,7 @@ public class Health : MonoBehaviour
                 //Desactivar todos los componentes en clases
                 foreach (Behaviour component in components)
                     component.enabled = false;
+                Destroy(this.gameObject);
 
                 dead = true;
             }

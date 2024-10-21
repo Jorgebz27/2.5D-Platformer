@@ -43,6 +43,7 @@ GameObject:
   - component: {fileID: 3375774211383549941}
   - component: {fileID: 3909916697629807715}
   - component: {fileID: 9196101303829373962}
+  - component: {fileID: 1220160847705609107}
   m_Layer: 3
   m_Name: Player
   m_TagString: Player
@@ -199,6 +200,24 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
+--- !u!114 &1220160847705609107
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3504313386039103375}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4cf857c6fe98e546a91ea905178e15b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  meleePoint: {fileID: 5531706442756225824}
+  attackRange: 1
+  attackDamage: 10
+  enemyLayers:
+    serializedVersion: 2
+    m_Bits: 0
 --- !u!1 &3689812013091656527
 GameObject:
   m_ObjectHideFlags: 0

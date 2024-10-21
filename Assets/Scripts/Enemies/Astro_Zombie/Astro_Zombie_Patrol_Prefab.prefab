@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6873663772818847362}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Left_Edge
   m_TagString: Untagged
   m_Icon: {fileID: 1206586993520771344, guid: 0000000000000000d000000000000000, type: 0}
@@ -45,7 +45,7 @@ GameObject:
   - component: {fileID: 2479635431835599999}
   - component: {fileID: 3104851258039567336}
   - component: {fileID: 3198892017256372463}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Astro_Zombie
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -233,7 +233,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4434518671728692312}
   - component: {fileID: 4646425802874409378}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Astro_Zombie_Patrol_Prefab
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -256,7 +256,7 @@ Transform:
   - {fileID: 4543331237765136245}
   - {fileID: 2674098013287550756}
   m_Father: {fileID: 0}
-  m_RootOrder: 9
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &4646425802874409378
 MonoBehaviour:
@@ -285,7 +285,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4543331237765136245}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Right_Edge
   m_TagString: Untagged
   m_Icon: {fileID: 1206586993520771344, guid: 0000000000000000d000000000000000, type: 0}
