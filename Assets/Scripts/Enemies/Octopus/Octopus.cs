@@ -1,11 +1,15 @@
 using UnityEngine;
 
-public class Astro : MonoBehaviour
+public class Octopus : MonoBehaviour
 {
     [Header("Attack Parameters")]
     [SerializeField] private float attackCooldown;
     [SerializeField] private float range;
-    [SerializeField] private int damage;
+    //[SerializeField] private int damage;
+
+    [Header("Ranged Attack")]
+    [SerializeField] private Transform firepoint;
+    [SerializeField] private GameObject[] stones;
 
     [Header("Collider Parameters")]
     [SerializeField] private float colliderDistance;
@@ -17,12 +21,11 @@ public class Astro : MonoBehaviour
 
     //References
     private Animator anim;
-    private Health playerHealth;
     private EnemyPatrol enemyPatrol;
 
     private void Awake()
     {
-        //anim = GetComponent<Animator>();
+        anim = GetComponent<Animator>();
         enemyPatrol = GetComponentInParent<EnemyPatrol>();
     }
 
@@ -30,19 +33,34 @@ public class Astro : MonoBehaviour
     {
         cooldownTimer += Time.deltaTime;
 
-        //Attack only when player in sight?
         if (PlayerInSight())
         {
             if (cooldownTimer >= attackCooldown)
             {
                 cooldownTimer = 0;
-                //anim.SetTrigger("meleeAttack"); La animacion tendra un evento que llama la funcion de damage player, de momento se llama aqui
-                DamagePlayer();
+                //anim.SetTrigger("rangedAttack");
+                RangedAttack();
             }
         }
 
         if (enemyPatrol != null)
             enemyPatrol.enabled = !PlayerInSight();
+    }
+
+    private void RangedAttack()
+    {
+        cooldownTimer = 0;
+        stones[FindStone()].transform.position = firepoint.position;
+        stones[FindStone()].GetComponent<EnemyProjectile>().ActivateProjectile();
+    }
+    private int FindStone()
+    {
+        for (int i = 0; i < stones.Length; i++)
+        {
+            if (!stones[i].activeInHierarchy)
+                return i;
+        }
+        return 0;
     }
 
     private bool PlayerInSight()
@@ -52,21 +70,12 @@ public class Astro : MonoBehaviour
             new Vector3(boxCollider.bounds.size.x * range, boxCollider.bounds.size.y, boxCollider.bounds.size.z),
             0, Vector2.left, 0, playerLayer);
 
-        if (hit.collider != null)
-            playerHealth = hit.transform.GetComponent<Health>();
-
         return hit.collider != null;
     }
     private void OnDrawGizmos()
     {
-        Gizmos.color = Color.green;
+        Gizmos.color = Color.red;
         Gizmos.DrawWireCube(boxCollider.bounds.center + transform.right * range * transform.localScale.x * colliderDistance,
             new Vector3(boxCollider.bounds.size.x * range, boxCollider.bounds.size.y, boxCollider.bounds.size.z));
-    }
-
-    private void DamagePlayer()
-    {
-        if (PlayerInSight())
-            playerHealth.TakeDamage(damage);
     }
 }

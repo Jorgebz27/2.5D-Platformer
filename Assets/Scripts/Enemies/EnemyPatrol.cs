@@ -27,7 +27,7 @@ public class EnemyPatrol : MonoBehaviour
     }
     private void OnDisable()
     {
-        anim.SetBool("moving", false);
+        //anim.SetBool("moving", false);
     }
 
     private void Update()
@@ -50,7 +50,7 @@ public class EnemyPatrol : MonoBehaviour
 
     private void DirectionChange()
     {
-        anim.SetBool("moving", false);
+        //anim.SetBool("moving", false);
         idleTimer += Time.deltaTime;
 
         if (idleTimer > idleDuration)
@@ -60,7 +60,7 @@ public class EnemyPatrol : MonoBehaviour
     private void MoveInDirection(int _direction)
     {
         idleTimer = 0;
-        anim.SetBool("moving", true);
+        //anim.SetBool("moving", true);
 
         //Make enemy face direction
         enemy.localScale = new Vector3(Mathf.Abs(initScale.x) * _direction,
