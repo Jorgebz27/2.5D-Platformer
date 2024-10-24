@@ -7,7 +7,7 @@ public class Health : MonoBehaviour
     [SerializeField] private float startingHealth;
     public float currentHealth { get; private set; }
     private Animator anim;
-    private bool dead;
+    public bool dead;
 
     [Header("iFrames")]
     [SerializeField] private float iFramesDuration;
@@ -31,7 +31,7 @@ public class Health : MonoBehaviour
 
         if (currentHealth > 0)
         {
-            //cuando se tenga la animacion de tomar da�o prender esto
+            //cuando se tenga la animacion de tomar dano prender esto
 
             //anim.SetTrigger("hurt");
             StartCoroutine(Invunerability());
@@ -70,5 +70,9 @@ public class Health : MonoBehaviour
         }
         Physics2D.IgnoreLayerCollision(10, 11, false);
         invulnerable = false;
+    }
+    public void AddMaxHealth(float _value)
+    {
+        currentHealth += _value;
     }
 }

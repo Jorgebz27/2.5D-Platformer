@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Animations;
+using static UnityEngine.EventSystems.EventTrigger;
 
 public class PlayerCombat : MonoBehaviour
 {
@@ -15,12 +16,31 @@ public class PlayerCombat : MonoBehaviour
     //Laser
     public Transform laserFirePoint;
     public LineRenderer laserLineRenderer;
+    //public LineRenderer upgradedLaserLineRenderer;
     public float laserRange = 10f;
+    public float upgradedLaserRange = 15f;
     public int laserDamage = 20;
+    public int UpgradedLaserDamage = 25;
     public float laserDamageRate = 0.5f;
 
     private bool _isLaserActive = false;
     private float _nextLaserDamageTime = 0f;
+
+    //progresion
+    public static float score;
+    public bool stage0 = true;
+    public static bool healthUpgrade;
+    public static bool laserUpgrade;
+    public static bool movementUpgrade;
+
+
+
+    private void Awake()
+    {
+        healthUpgrade = false;
+        laserUpgrade = false;
+        movementUpgrade = false;
+    }
     void Update()
     {
         if (Input.GetMouseButtonDown(0)) 
@@ -51,6 +71,10 @@ public class PlayerCombat : MonoBehaviour
         foreach (Collider2D enemy in hitEnemies)
         {
             enemy.GetComponent<Health>().TakeDamage(attackDamage);
+            if (enemy.GetComponent<Health>().dead == true)
+            {
+                score += 50;
+            }
             Debug.Log("hit");
         }
         
@@ -59,11 +83,22 @@ public class PlayerCombat : MonoBehaviour
 
     void ShootLaser()
     {
+        //if (laserUpgrade == false)
+        //{
         laserLineRenderer.SetPosition(0, laserFirePoint.position);
-        
+        if (laserUpgrade == false)
+        {
+            laserLineRenderer.startColor = Color.cyan;
+            laserLineRenderer.endColor = Color.cyan;
+        }
+        if (laserUpgrade == true)
+        {
+            laserLineRenderer.startColor = Color.red;
+            laserLineRenderer.endColor = Color.red;
+        }
+
         Vector2 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         Vector2 direction = (mousePosition - (Vector2)laserFirePoint.position).normalized;
-
         RaycastHit2D hitInfo = Physics2D.Raycast(laserFirePoint.position, direction, laserRange, enemyLayers);
         if (hitInfo)
         {
@@ -72,8 +107,21 @@ public class PlayerCombat : MonoBehaviour
             Health enemy = hitInfo.collider.GetComponent<Health>();
             if (enemy != null && Time.time >= _nextLaserDamageTime)
             {
-                enemy.TakeDamage(laserDamage);
+                if (laserUpgrade == false)
+                {
+                    enemy.TakeDamage(laserDamage);
+                }
+                if (laserUpgrade == true)
+                {
+                    enemy.TakeDamage(UpgradedLaserDamage);
+                }
                 _nextLaserDamageTime = Time.time + laserDamageRate;
+                if (enemy.GetComponent<Health>().dead == true)
+                {
+                    score += 50;
+                    Debug.Log(score);
+
+                }
                 Debug.Log("Daño continuo con láser.");
             }
         }
@@ -81,6 +129,38 @@ public class PlayerCombat : MonoBehaviour
         {
             laserLineRenderer.SetPosition(1, (Vector2)laserFirePoint.position + direction * laserRange);
         }
+        //}
+        //if(laserUpgrade == true) 
+        //{
+        //    upgradedLaserLineRenderer.SetPosition(0, laserFirePoint.position);
+
+        //    Vector2 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        //    Vector2 direction = (mousePosition - (Vector2)laserFirePoint.position).normalized;
+
+        //    RaycastHit2D hitInfo = Physics2D.Raycast(laserFirePoint.position, direction, laserRange+5, enemyLayers);
+        //    if (hitInfo)
+        //    {
+        //        upgradedLaserLineRenderer.SetPosition(1, hitInfo.point);
+
+        //        Health enemy = hitInfo.collider.GetComponent<Health>();
+        //        if (enemy != null && Time.time >= _nextLaserDamageTime)
+        //        {
+        //            enemy.TakeDamage(laserDamage+5);
+        //            _nextLaserDamageTime = Time.time + laserDamageRate;
+        //            if (enemy.GetComponent<Health>().dead == true)
+        //            {
+        //                score += 50;
+        //                Debug.Log(score);
+
+        //            }
+        //            Debug.Log("Daño continuo con láser.");
+        //        }
+        //    }
+        //    else
+        //    {
+        //        upgradedLaserLineRenderer.SetPosition(1, (Vector2)laserFirePoint.position + direction * laserRange);
+        //    }
+        //}
     }
     
     private void OnDrawGizmos()

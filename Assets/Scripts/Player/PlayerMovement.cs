@@ -6,7 +6,7 @@ using UnityEngine;
 public class PlayerMovement : MonoBehaviour
 {
     //Movement
-    public float mSpeed = 7f;
+    public static float mSpeed = 7f;
     public float acc = 12f;
     public float deAcc = 10f;
     public float airAcc = 8f;
