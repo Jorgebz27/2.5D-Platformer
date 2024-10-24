@@ -2,17 +2,17 @@ using UnityEngine;
 
 public class EnemyPatrol : MonoBehaviour
 {
-    [Header("Patrol Points")]
-    [SerializeField] private Transform leftEdge;
-    [SerializeField] private Transform rightEdge;
+    [SerializeField] private Transform[] waypoints;
 
     [Header("Enemy")]
     [SerializeField] private Transform enemy;
 
     [Header("Movement parameters")]
     [SerializeField] private float speed;
-    private Vector3 initScale;
-    private bool movingLeft;
+
+    private Vector2 moveDirection;
+    private int currentPointIndex = 0;
+    private bool goingForward = true;  // Controla la dirección de ida y vuelta
 
     [Header("Idle Behaviour")]
     [SerializeField] private float idleDuration;
@@ -21,53 +21,66 @@ public class EnemyPatrol : MonoBehaviour
     [Header("Enemy Animator")]
     [SerializeField] private Animator anim;
 
-    private void Awake()
+    void Start()
     {
-        initScale = enemy.localScale;
-    }
-    private void OnDisable()
-    {
-        //anim.SetBool("moving", false);
+        SetMoveDirection();
     }
 
-    private void Update()
+    void Update()
     {
-        if (movingLeft)
+        Patrol();
+    }
+
+    private void Patrol()
+    {
+        if (waypoints.Length == 0) return;
+
+        // Mover al enemigo en la dirección establecida
+        transform.Translate(moveDirection * (speed * Time.deltaTime));
+
+        // Si está lo suficientemente cerca del waypoint actual, cambiar al siguiente
+        if (Vector2.Distance(transform.position, waypoints[currentPointIndex].position) < 0.1f)
         {
-            if (enemy.position.x >= leftEdge.position.x)
-                MoveInDirection(-1);
-            else
-                DirectionChange();
+            // Cambiar de dirección si alcanzó el último waypoint o el primero
+            if (goingForward && currentPointIndex == waypoints.Length - 1)
+            {
+                goingForward = false;
+            }
+            else if (!goingForward && currentPointIndex == 0)
+            {
+                goingForward = true;
+            }
+
+            // Actualizar el índice de waypoint de acuerdo a la dirección
+            currentPointIndex = goingForward ? currentPointIndex + 1 : currentPointIndex - 1;
+
+            // Establecer la nueva dirección de movimiento
+            SetMoveDirection();
         }
-        else
+    }
+
+    private void SetMoveDirection()
+    {
+        Vector2 targetPoint = waypoints[currentPointIndex].position;
+        moveDirection = (targetPoint - (Vector2)transform.position).normalized;
+    }
+
+    // Gizmos para visualizar los waypoints en la escena
+    private void OnDrawGizmos()
+    {
+        if (waypoints != null)
         {
-            if (enemy.position.x <= rightEdge.position.x)
-                MoveInDirection(1);
-            else
-                DirectionChange();
+            for (int i = 0; i < waypoints.Length; i++)
+            {
+                Gizmos.color = Color.green;
+                Gizmos.DrawSphere(waypoints[i].position, 0.2f);
+
+                if (i + 1 < waypoints.Length)
+                {
+                    Gizmos.color = Color.yellow;
+                    Gizmos.DrawLine(waypoints[i].position, waypoints[i + 1].position);
+                }
+            }
         }
-    }
-
-    private void DirectionChange()
-    {
-        //anim.SetBool("moving", false);
-        idleTimer += Time.deltaTime;
-
-        if (idleTimer > idleDuration)
-            movingLeft = !movingLeft;
-    }
-
-    private void MoveInDirection(int _direction)
-    {
-        idleTimer = 0;
-        //anim.SetBool("moving", true);
-
-        //Make enemy face direction
-        enemy.localScale = new Vector3(Mathf.Abs(initScale.x) * _direction,
-            initScale.y, initScale.z);
-
-        //Move in that direction
-        enemy.position = new Vector3(enemy.position.x + Time.deltaTime * _direction * speed,
-            enemy.position.y, enemy.position.z);
     }
 }
