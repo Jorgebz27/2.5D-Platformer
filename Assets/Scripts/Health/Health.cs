@@ -47,7 +47,14 @@ public class Health : MonoBehaviour
                 //Desactivar todos los componentes en clases
                 foreach (Behaviour component in components)
                     component.enabled = false;
-                Destroy(this.gameObject);
+                if (CompareTag("Player"))
+                {
+                    
+                }
+                else
+                {
+                    Destroy(this.gameObject);
+                }
 
                 dead = true;
             }

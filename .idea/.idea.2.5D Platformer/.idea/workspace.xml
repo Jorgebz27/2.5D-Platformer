@@ -6,9 +6,9 @@
   <component name="ChangeListManager">
     <list default="true" id="a6464ae1-fa90-4483-b0d4-d8fc8dc1873a" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.2.5D Platformer/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.2.5D Platformer/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scenes/SampleScene.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/SampleScene.unity" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Enemies/Astro_Zombie/Astro_Zombie_Patrol_Prefab.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Enemies/Astro_Zombie/Astro_Zombie_Patrol_Prefab.prefab" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Enemies/EnemyPatrol.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Enemies/EnemyPatrol.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Enemies/Astro_Zombie/Astro.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Enemies/Astro_Zombie/Astro.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Health/Health.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Health/Health.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Player/PlayerRespawn.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Player/PlayerRespawn.cs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -95,6 +95,8 @@
       <workItem from="1729473619375" duration="3587000" />
       <workItem from="1729477308447" duration="63000" />
       <workItem from="1729735918782" duration="1626000" />
+      <workItem from="1729805086119" duration="2699000" />
+      <workItem from="1729809013107" duration="1993000" />
     </task>
     <servers />
   </component>

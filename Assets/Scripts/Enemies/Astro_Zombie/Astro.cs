@@ -18,6 +18,8 @@ public class Astro : MonoBehaviour
     //References
     private Animator anim;
     private Health playerHealth;
+    [SerializeField]
+    private PlayerRespawn playerRes;
     private EnemyPatrol enemyPatrol;
 
     private void Awake()
@@ -37,7 +39,14 @@ public class Astro : MonoBehaviour
             {
                 cooldownTimer = 0;
                 //anim.SetTrigger("meleeAttack"); La animacion tendra un evento que llama la funcion de damage player, de momento se llama aqui
-                DamagePlayer();
+                if (playerHealth.currentHealth <= 0)
+                {
+                    playerRes.Respawn();
+                }
+                else
+                {
+                    DamagePlayer();
+                }
             }
         }
 
@@ -48,7 +57,7 @@ public class Astro : MonoBehaviour
     private bool PlayerInSight()
     {
         RaycastHit2D hit =
-            Physics2D.BoxCast(boxCollider.bounds.center + transform.right * range * transform.localScale.x * colliderDistance,
+            Physics2D.BoxCast(boxCollider.bounds.center + transform.right * (range * transform.localScale.x * colliderDistance),
             new Vector3(boxCollider.bounds.size.x * range, boxCollider.bounds.size.y, boxCollider.bounds.size.z),
             0, Vector2.left, 0, playerLayer);
 
