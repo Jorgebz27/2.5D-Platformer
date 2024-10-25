@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class Octopus : MonoBehaviour
 {
@@ -22,6 +23,7 @@ public class Octopus : MonoBehaviour
     //References
     private Animator anim;
     private EnemyPatrol enemyPatrol;
+    public Health playerHealth;
 
     private void Awake()
     {
@@ -38,8 +40,15 @@ public class Octopus : MonoBehaviour
             if (cooldownTimer >= attackCooldown)
             {
                 cooldownTimer = 0;
-                //anim.SetTrigger("rangedAttack");
-                RangedAttack();
+                if (playerHealth.currentHealth <= 0)
+                {
+                    //playerRes.Respawn();
+                    SceneManager.LoadScene(0);
+                }
+                else
+                {
+                    RangedAttack();
+                }
             }
         }
 

@@ -47,15 +47,10 @@ public class Health : MonoBehaviour
                 //Desactivar todos los componentes en clases
                 foreach (Behaviour component in components)
                     component.enabled = false;
-                if (CompareTag("Player"))
-                {
-                    
-                }
-                else
-                {
-                    Destroy(this.gameObject);
-                }
-
+                
+                gameObject.GetComponent<SpriteRenderer>().enabled = false;
+                gameObject.GetComponentInChildren<SpriteRenderer>().enabled = false;
+                
                 dead = true;
             }
         }

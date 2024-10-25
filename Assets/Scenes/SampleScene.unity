@@ -2637,6 +2637,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Ranged_Enemy_Holder
       objectReference: {fileID: 0}
+    - target: {fileID: 4048005040379014789, guid: 091916c413d24884c98ec0effa3de671, type: 3}
+      propertyPath: playerHealth
+      value: 
+      objectReference: {fileID: 99599572}
     - target: {fileID: 4841737211131913902, guid: 091916c413d24884c98ec0effa3de671, type: 3}
       propertyPath: m_RootOrder
       value: 8

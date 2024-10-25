@@ -1,4 +1,6 @@
+using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class Astro : MonoBehaviour
 {
@@ -22,6 +24,8 @@ public class Astro : MonoBehaviour
     private PlayerRespawn playerRes;
     private EnemyPatrol enemyPatrol;
 
+    public Health enemyHealth;
+    
     private void Awake()
     {
         //anim = GetComponent<Animator>();
@@ -41,7 +45,8 @@ public class Astro : MonoBehaviour
                 //anim.SetTrigger("meleeAttack"); La animacion tendra un evento que llama la funcion de damage player, de momento se llama aqui
                 if (playerHealth.currentHealth <= 0)
                 {
-                    playerRes.Respawn();
+                    //playerRes.Respawn();
+                    SceneManager.LoadScene(0);
                 }
                 else
                 {
