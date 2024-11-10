@@ -21,6 +21,7 @@ public class UpgradeManager : MonoBehaviour
     {
         if (PlayerCombat.score == 50)
         {
+            Time.timeScale = 0;
             upgradePanel.SetActive(true);
             laserButton.SetActive(true);
             movementButton.SetActive(true);
@@ -29,10 +30,12 @@ public class UpgradeManager : MonoBehaviour
         }
         if (PlayerCombat.score == 101)
         {
+            Time.timeScale = 0;
             upgradePanel.SetActive(true);
         }
         if (PlayerCombat.score == 152)
         {
+            Time.timeScale = 0;
             upgradePanel.SetActive(true);
         }
     }
@@ -41,6 +44,7 @@ public class UpgradeManager : MonoBehaviour
     {
         PlayerCombat.laserUpgrade = true;
         PlayerCombat.score += 1;
+        Time.timeScale = 1;
         upgradePanel.SetActive(false);
         laserButton.SetActive(false);
     }
@@ -48,6 +52,7 @@ public class UpgradeManager : MonoBehaviour
     {
         playerHealth.AddMaxHealth(25);
         PlayerCombat.score += 1;
+        Time.timeScale = 1;
         upgradePanel.SetActive(false);
         healthButton.SetActive(false);
     }
@@ -55,6 +60,7 @@ public class UpgradeManager : MonoBehaviour
     {
         PlayerMovement.mSpeed = 10f;
         PlayerCombat.score += 1;
+        Time.timeScale = 1;
         upgradePanel.SetActive(false);
         movementButton.SetActive(false);
     }
