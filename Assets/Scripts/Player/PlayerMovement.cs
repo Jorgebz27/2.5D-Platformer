@@ -2,10 +2,12 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class PlayerMovement : MonoBehaviour
 {
     //Movement
+    [Header("Movement")]
     public static float mSpeed = 7f;
     public float acc = 12f;
     public float deAcc = 10f;
@@ -16,7 +18,8 @@ public class PlayerMovement : MonoBehaviour
     private Vector2 velocity;
     private float verticalVelocity;
     private bool isFacingR = true;
-    
+
+    [Header("Jump")]
     //Jump
     public float jumpForce = 18f;
     public float jumpHoldTime = 0.3f;
@@ -28,22 +31,28 @@ public class PlayerMovement : MonoBehaviour
     private float _jumpTimeCounter;
     private float _coyoteTimeCounter;
     private float _jumpBufferCounter;
-    
+
     //Dash
+    [Header("Dash")]
     public float dashSpeed = 25f;
     public float dashTime = 0.2f;
     public float dashCooldown = 1.5f;
     private bool _canDash = true;
     private bool _isDashing;
-    
+
     //Collision
+    [Header("Collision")]
     public LayerMask groundLayer;
     public Transform groundCheck;
     public Transform ceilingCheck;
     public float checkRad = 0.2f;
     private bool _isGrounded = false;
     private bool _isTouchingCeiling = false;
-    
+
+
+    //HUD
+    [Header("Hud")]
+    [SerializeField] private Slider slider;
 
     private void Update()
     {

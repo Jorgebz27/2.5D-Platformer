@@ -3,20 +3,22 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Animations;
+using UnityEngine.UI;
 using static UnityEngine.EventSystems.EventTrigger;
 
 public class PlayerCombat : MonoBehaviour
 {
     //Melee
+    [Header("Melee")]
     public Transform meleePoint;
     public float attackRange = 1f;
     public int attackDamage = 10; 
-    public LayerMask enemyLayers; 
+    public LayerMask enemyLayers;
 
     //Laser
+    [Header("Laser")]
     public Transform laserFirePoint;
     public LineRenderer laserLineRenderer;
-    //public LineRenderer upgradedLaserLineRenderer;
     public float laserRange = 10f;
     public float upgradedLaserRange = 15f;
     public int laserDamage = 20;
@@ -26,13 +28,16 @@ public class PlayerCombat : MonoBehaviour
     private bool _isLaserActive = false;
     private float _nextLaserDamageTime = 0f;
 
-    //progresion
+    //Progresion
+    [Header("Progresion")]
     public static float score;
     public bool stage0 = true;
     public static bool healthUpgrade;
     public static bool laserUpgrade;
     public static bool movementUpgrade;
 
+    [Header("Hud")]
+    [SerializeField] private Slider progressionSlider;
 
 
     private void Awake()
@@ -40,6 +45,7 @@ public class PlayerCombat : MonoBehaviour
         healthUpgrade = false;
         laserUpgrade = false;
         movementUpgrade = false;
+        progressionSlider.maxValue = 50;
     }
     void Update()
     {
@@ -62,6 +68,8 @@ public class PlayerCombat : MonoBehaviour
             _isLaserActive = false;
             laserLineRenderer.enabled = false;
         }
+        progressionSlider.value = score;
+
     }
 
     void MeleeAttack()
@@ -73,7 +81,7 @@ public class PlayerCombat : MonoBehaviour
             enemy.GetComponent<Health>().TakeDamage(attackDamage);
             if (enemy.GetComponent<Health>().dead == true)
             {
-                score += 50;
+                score += 25;
             }
             Debug.Log("hit");
         }
@@ -118,8 +126,7 @@ public class PlayerCombat : MonoBehaviour
                 _nextLaserDamageTime = Time.time + laserDamageRate;
                 if (enemy.GetComponent<Health>().dead == true)
                 {
-                    score += 50;
-                    Debug.Log(score);
+                    score += 25;
 
                 }
                 Debug.Log("Daño continuo con láser.");

@@ -1,5 +1,6 @@
 using UnityEngine;
 using System.Collections;
+using UnityEngine.UI;
 
 public class Health : MonoBehaviour
 {
@@ -18,11 +19,20 @@ public class Health : MonoBehaviour
     [SerializeField] private Behaviour[] components;
     private bool invulnerable;
 
+    [Header("HUD")]
+    [SerializeField] private Slider healthSlider;
+
     private void Awake()
     {
         currentHealth = startingHealth;
         //anim = GetComponent<Animator>();
         spriteRend = GetComponent<SpriteRenderer>();
+    }
+
+    private void Update()
+    {
+        healthSlider.maxValue = startingHealth;
+        healthSlider.value = currentHealth;
     }
     public void TakeDamage(float _damage)
     {

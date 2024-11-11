@@ -131,6 +131,7 @@ GameObject:
   - component: {fileID: 7347135769948651350}
   - component: {fileID: 8421145777552728880}
   - component: {fileID: 4048005040379014789}
+  - component: {fileID: 3287527561805567634}
   m_Layer: 8
   m_Name: Octopus
   m_TagString: Untagged
@@ -282,6 +283,27 @@ MonoBehaviour:
   playerLayer:
     serializedVersion: 2
     m_Bits: 8
+  playerHealth: {fileID: 0}
+--- !u!114 &3287527561805567634
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3078564926349983549}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0befebd1545d87e4bba1fee5240ea549, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  startingHealth: 100
+  dead: 0
+  iFramesDuration: 0
+  numberOfFlashes: 0
+  components:
+  - {fileID: 3287527561805567634}
+  - {fileID: 4048005040379014789}
+  - {fileID: 8421145777552728880}
 --- !u!1001 &661326132013417216
 PrefabInstance:
   m_ObjectHideFlags: 0
