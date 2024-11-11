@@ -146,11 +146,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   startingHealth: 100
+  dead: 0
   iFramesDuration: 0
   numberOfFlashes: 0
   components:
   - {fileID: 3104851258039567336}
   - {fileID: 4646425802874409378}
+  - {fileID: 2479472940166676175}
+  - {fileID: 2479635431835599999}
+  healthSlider: {fileID: 0}
 --- !u!114 &3104851258039567336
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -171,6 +175,8 @@ MonoBehaviour:
   playerLayer:
     serializedVersion: 2
     m_Bits: 8
+  playerRes: {fileID: 0}
+  enemyHealth: {fileID: 0}
 --- !u!95 &3198892017256372463
 Animator:
   serializedVersion: 5

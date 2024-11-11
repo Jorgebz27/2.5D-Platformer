@@ -5,7 +5,7 @@ using UnityEngine.UI;
 public class Health : MonoBehaviour
 {
     [Header("Health")]
-    [SerializeField] private float startingHealth;
+    [SerializeField] public float startingHealth;
     public float currentHealth { get; private set; }
     private Animator anim;
     public bool dead;
@@ -19,9 +19,6 @@ public class Health : MonoBehaviour
     [SerializeField] private Behaviour[] components;
     private bool invulnerable;
 
-    [Header("HUD")]
-    [SerializeField] private Slider healthSlider;
-
     private void Awake()
     {
         currentHealth = startingHealth;
@@ -29,11 +26,6 @@ public class Health : MonoBehaviour
         spriteRend = GetComponent<SpriteRenderer>();
     }
 
-    private void Update()
-    {
-        healthSlider.maxValue = startingHealth;
-        healthSlider.value = currentHealth;
-    }
     public void TakeDamage(float _damage)
     {
         if (invulnerable) return;
@@ -85,6 +77,7 @@ public class Health : MonoBehaviour
     }
     public void AddMaxHealth(float _value)
     {
+        startingHealth += _value;
         currentHealth += _value;
     }
 }
