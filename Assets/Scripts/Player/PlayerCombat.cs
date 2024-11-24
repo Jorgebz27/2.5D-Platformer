@@ -56,7 +56,7 @@ public class PlayerCombat : MonoBehaviour
         
         if (Input.GetMouseButton(1))
         {
-            if (!_isLaserActive)
+            if (!_isLaserActive && Time.timeScale == 1)
             {
                 _isLaserActive = true;
                 laserLineRenderer.enabled = true;
