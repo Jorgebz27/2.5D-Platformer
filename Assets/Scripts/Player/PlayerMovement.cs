@@ -189,9 +189,9 @@ public class PlayerMovement : MonoBehaviour
         if (Time.timeScale == 1)
         {
             isFacingR = !isFacingR;
-            Vector3 scale = transform.localScale;
-            scale.x *= -1;
-            transform.localScale = scale;
+            Vector3 scaler = transform.localScale;
+            scaler.x *= -1;
+            transform.localScale = scaler;
         }
     }
 
