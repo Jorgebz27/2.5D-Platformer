@@ -174,10 +174,13 @@ public class PlayerMovement : MonoBehaviour
     
     private void Flip()
     {
-        isFacingR = !isFacingR;
-        Vector3 scale = transform.localScale;
-        scale.x *= -1;
-        transform.localScale = scale;
+        if (Time.timeScale == 1)
+        {
+            isFacingR = !isFacingR;
+            Vector3 scale = transform.localScale;
+            scale.x *= -1;
+            transform.localScale = scale;
+        }
     }
 
     private void OnDrawGizmosSelected()
