@@ -18,10 +18,7 @@ public class PlayerRespawn : MonoBehaviour
     {
             if (other.CompareTag("Respawn"))
             {
-                if (playerHealth.currentHealth <= 0f)
-                {
                     Respawn();
-                }
             }
     }
 
@@ -35,4 +32,12 @@ public class PlayerRespawn : MonoBehaviour
         transform.position = respawnPoint.position;
     }
     
+    public void Stats()
+    {
+        PlayerMovement.mSpeed = 7f;
+        PlayerCombat.score = 0;
+        PlayerCombat.laserUpgrade = false;
+        playerHealth.AddMaxHealth(-25);
+        Debug.Log("Player Respawn");
+    }
 }

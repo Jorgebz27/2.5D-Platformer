@@ -45,9 +45,12 @@ public class PlayerMovement : MonoBehaviour
     public LayerMask groundLayer;
     public Transform groundCheck;
     public Transform ceilingCheck;
+    public Transform wallCheck;
     public float checkRad = 0.2f;
+    public float checkOffset = 0.5f;
     private bool _isGrounded = false;
     private bool _isTouchingCeiling = false;
+    private bool isTouchingWall;
 
 
     //HUD
@@ -67,31 +70,40 @@ public class PlayerMovement : MonoBehaviour
 
     private void Movement()
     {
-        var speed = hInput * mSpeed;
-        var acceleration = _isGrounded ? acc : airAcc;
+        Vector2 checkPosition = isFacingR 
+            ? wallCheck.position + Vector3.right * checkOffset 
+            : wallCheck.position + Vector3.left * checkOffset;
         
-        velocity.x  = Mathf.Lerp(velocity.x, speed, Time.deltaTime * acceleration);
-
+        bool isTouchingWall = Physics2D.OverlapCircle(checkPosition, checkRad, groundLayer);
+        
+        if (isTouchingWall && Mathf.Sign(hInput) == (isFacingR ? 1 : -1))
+        {
+            velocity.x = 0;
+        }
+        else
+        {
+            float targetSpeed = hInput * mSpeed;
+            var acceleration = _isGrounded ? acc : airAcc;
+            velocity.x = Mathf.Lerp(velocity.x, targetSpeed, Time.deltaTime * acceleration);
+        }
+        
         if (!_isDashing)
         {
             verticalVelocity += gravity * Time.deltaTime;
             verticalVelocity = Mathf.Clamp(verticalVelocity, maxFallSpeed, Mathf.Infinity);
         }
-        
+
         if (_isGrounded && verticalVelocity < 0)
         {
             verticalVelocity = 0f;
         }
         
         transform.Translate(new Vector2(velocity.x, verticalVelocity) * Time.deltaTime);
-
-        switch (hInput)
+        
+        if ((hInput > 0 && !isFacingR) || (hInput < 0 && isFacingR))
         {
-            case > 0 when !isFacingR:
-            case < 0 when isFacingR:
-                Flip();
-                break;
-        };
+            Flip();
+        }
     }
 
     private void Jump()
@@ -186,5 +198,11 @@ public class PlayerMovement : MonoBehaviour
         Gizmos.DrawWireSphere(groundCheck.position, checkRad);
         Gizmos.color = Color.green;
         Gizmos.DrawWireSphere(ceilingCheck.position, checkRad);
+        Gizmos.color = Color.red;
+        Vector2 checkPosition = isFacingR 
+            ? wallCheck.position + Vector3.right * checkOffset 
+            : wallCheck.position + Vector3.left * checkOffset;
+
+        Gizmos.DrawWireSphere(checkPosition, checkRad);
     }
 }

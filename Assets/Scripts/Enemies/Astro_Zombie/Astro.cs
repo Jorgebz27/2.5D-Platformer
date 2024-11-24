@@ -45,8 +45,8 @@ public class Astro : MonoBehaviour
                 //anim.SetTrigger("meleeAttack"); La animacion tendra un evento que llama la funcion de damage player, de momento se llama aqui
                 if (playerHealth.currentHealth <= 0)
                 {
-                    //playerRes.Respawn();
-                    SceneManager.LoadScene(0);
+                    playerRes.Stats();
+                    SceneManager.LoadScene(1);
                 }
                 else
                 {

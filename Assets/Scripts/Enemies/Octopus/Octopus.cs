@@ -19,6 +19,8 @@ public class Octopus : MonoBehaviour
     [Header("Player Layer")]
     [SerializeField] private LayerMask playerLayer;
     private float cooldownTimer = Mathf.Infinity;
+    [SerializeField]
+    private PlayerRespawn playerRes;
 
     //References
     private Animator anim;
@@ -42,8 +44,8 @@ public class Octopus : MonoBehaviour
                 cooldownTimer = 0;
                 if (playerHealth.currentHealth <= 0)
                 {
-                    //playerRes.Respawn();
-                    SceneManager.LoadScene(0);
+                    playerRes.Stats();
+                    SceneManager.LoadScene(1);
                 }
                 else
                 {
