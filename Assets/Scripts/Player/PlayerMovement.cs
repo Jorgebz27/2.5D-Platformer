@@ -66,6 +66,11 @@ public class PlayerMovement : MonoBehaviour
         Movement();
         Jump();
         Dash();
+
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            Application.Quit();
+        }
     }
 
     private void Movement()

@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class PlayerRespawn : MonoBehaviour
 {
@@ -18,17 +19,13 @@ public class PlayerRespawn : MonoBehaviour
     {
             if (other.CompareTag("Respawn"))
             {
-                    Respawn();
+                SceneManager.LoadScene(1);
             }
     }
 
     public void Respawn()
     {
-        PlayerMovement.mSpeed = 7f;
-        PlayerCombat.score = 0;
-        PlayerCombat.laserUpgrade = false;
-        playerHealth.AddMaxHealth(-25);
-        Debug.Log("Player Respawn");
+        Stats();
         transform.position = respawnPoint.position;
     }
     
