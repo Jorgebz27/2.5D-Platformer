@@ -15,7 +15,7 @@ TagManager:
   - groundLayer
   - limitLayer
   - enemy
-  - 
+  - Background
   - 
   - 
   - 
@@ -41,4 +41,7 @@ TagManager:
   m_SortingLayers:
   - name: Default
     uniqueID: 0
+    locked: 0
+  - name: Fondo
+    uniqueID: 1425695307
     locked: 0

@@ -61,7 +61,7 @@ public class PlayerMovement : MonoBehaviour
     {
         hInput = Input.GetAxisRaw("Horizontal");
         _isGrounded = Physics2D.OverlapCircle(groundCheck.position, checkRad, groundLayer);
-        _isTouchingCeiling = Physics2D.OverlapCircle(ceilingCheck.position, checkRad, groundLayer);
+        //_isTouchingCeiling = Physics2D.OverlapCircle(ceilingCheck.position, checkRad, groundLayer);
         
         Movement();
         Jump();
